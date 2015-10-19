@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Geo Location HTML - 5 API demo</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    
+</head>
+<body>
+<h1 class="location">Your Location : </h1>
+
+<div class="area"></div>
+
+<script>
+
+    var geo = navigator.geolocation;
+    
+    if(geo === undefined){
+            //error
+    }else{
+        geo.getCurrentPosition(function(position){
+            var lat = position.coords.latitude;
+            var long = position.coords.longitude;
+            
+            $.get("http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+long+"&sensor=true", function(address){
+                
+                $(".location").html("Your Location : "+address.results[0].formatted_address);
+            });
+            
+            var img = new Image();
+            img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + lat + "," + long + "&zoom=16&size=600x300&markers=red|"+lat+","+long+"&sensor=false";
+            
+            $(".area").append(img);
+        });
+        
+    }
+    
+    
+</script>   
+   
+    
+</body>
+</html>

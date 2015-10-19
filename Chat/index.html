@@ -1,0 +1,106 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real time livechat sytem using tcp sockets</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="//cdn.jsdelivr.net/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    <style>
+    
+        .msgs{
+            height: 560px;
+            width: 95%;
+            overflow-y: scroll;
+            margin: auto
+        }
+        
+        input#nickname{
+            width: 10%;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #48c;
+        }
+        
+        
+        input#msg{
+            width: 70%;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #48c;
+        }
+        
+        button{
+            width: 12%;
+            padding: 10px;
+            background: #28c;
+            font-size: 18px;
+            border: 2px solid #48c;
+            cursor: pointer;
+        }
+        footer{
+            position: fixed;
+            bottom:5px;
+            width: 100%;
+        }
+        li{
+            padding: 5px;
+            list-style: none;
+            font-style: italic;
+        }
+        ul li:nth-child(odd){
+            background: #ddd;    
+        }
+    
+    </style>
+    
+    
+</head>
+<body>
+   <div class="msgs">
+       <ul></ul>
+   </div>
+   <footer>
+       <input type="text" id="nickname" placeholder="nick Name">
+       <input type="text" id="msg" placeholder="Message">
+       <button id="send">Send</button>
+   </footer>
+   
+    <script>
+    var socket = io();
+        
+    $("#send").click(function(){
+        var name = $("#nickname").val();
+        var msg = $("#msg").val();
+        
+        var SendMsg = name+" : "+msg;
+        socket.emit("chat", SendMsg);
+        $("#msg").val("");
+    });
+        
+        
+    $(document).keypress(function(key){
+        if(key.keyCode == 13){
+            var name = $("#nickname").val();
+            var msg = $("#msg").val();
+
+            var SendMsg = name+" : "+msg;
+            socket.emit("chat", SendMsg);
+            $("#msg").val("");
+        
+        }
+    })
+        
+    socket.on("chat", function(msg){
+        $("ul").append("<li>"+msg+"</li>");
+        $(".msgs").animate({scrollTop:$("ul").height()},"slow");
+        
+    });
+    
+    
+    </script>    
+     
+       
+</body>
+</html>

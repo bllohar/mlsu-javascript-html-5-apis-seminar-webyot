@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML 5- desktop notification api - demo</title>
+</head>
+<body>
+    
+    <button onclick="notify();">Notify me</button>
+    
+    <script>
+        var notifyObj = window.Notification || window.mozNotification || window.webkitNotification;
+         
+        if(notifyObj === undefined){
+                        //error not supported
+        }else{
+                notifyObj.requestPermission(function(permission){
+
+                });
+
+        }
+        
+        function notify(){
+        
+            var newNotification = new notifyObj(
+                "Test Notification", {
+                    body:"Hello this is and test notification"
+                
+                }
+            );
+            
+            newNotification.onclick = function(){
+                alert("you have click on notification");
+            }
+        
+        
+        }
+     
+    
+    </script>
+</body>
+</html>

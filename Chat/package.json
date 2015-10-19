@@ -1,0 +1,9 @@
+{
+  "name": "ChatApp",
+  "version": "1.0.0",
+  "description": "Seminar chat app demo for MLSU student by webyot technologies",
+  "dependencies": {
+  	"express" : "4.13.3",
+	"socket.io" : "1.3.7"
+  }
+}
